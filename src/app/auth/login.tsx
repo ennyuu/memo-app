@@ -17,9 +17,28 @@ const Login = (): JSX.Element => {
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <Text style={styles.title}>Login</Text>
-                <TextInput style={styles.input} value={email} onChangeText={(text) => { setEmail(text) }} />
-                <TextInput style={styles.input} value={password} onChangeText={(password) => { setPassword(password) }} />
-                <Button label="Submit" onPress={handlePress} />
+                <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={(text) => { setEmail(text) }}
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    placeholder="Email Address"
+                    textContentType="emailAddress"
+                />
+                <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={(password) => { setPassword(password) }}
+                    autoCapitalize="none"
+                    secureTextEntry
+                    placeholder="Password"
+                    textContentType="password"
+                />
+                <Button
+                    label="Submit"
+                    onPress={handlePress}
+                />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registed?</Text>
                     <Link href="auth/signup" asChild>
