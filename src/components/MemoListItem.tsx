@@ -4,7 +4,7 @@ import Icon from "./Icom";
 
 const MemoListItem = (): JSX.Element => {
     return (
-        <View style={styles.memoListItem}>
+        <TouchableOpacity style={styles.memoListItem}>
 
             <View>
                 <Text style={styles.memoListTitle}>買い物リスト</Text>
@@ -15,7 +15,7 @@ const MemoListItem = (): JSX.Element => {
                 <Icon name="delete" size={24} color="#B0B0B0" />
             </TouchableOpacity>
 
-        </View>
+        </TouchableOpacity>
     );
 }
 
