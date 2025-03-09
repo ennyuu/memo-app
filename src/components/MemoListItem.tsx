@@ -1,4 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+
+import Icon from "./Icom";
 
 const MemoListItem = (): JSX.Element => {
     return (
@@ -9,9 +11,9 @@ const MemoListItem = (): JSX.Element => {
                 <Text style={styles.memoListDate}>2023年10月1日 10:00</Text>
             </View>
 
-            <View>
-                <Text>X</Text>
-            </View>
+            <TouchableOpacity>
+                <Icon name="delete" size={24} color="#B0B0B0" />
+            </TouchableOpacity>
 
         </View>
     );
