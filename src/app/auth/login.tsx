@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-nativ
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 
+import { Link } from "expo-router";
+
 const Login = (): JSX.Element => {
     return (
         <View style={styles.container}>
@@ -14,9 +16,11 @@ const Login = (): JSX.Element => {
                 <Button label="Submit" />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registed?</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.footerLink}>Sign up here!</Text>
-                    </TouchableOpacity>
+                    <Link href="auth/signup" asChild>
+                        <TouchableOpacity>
+                            <Text style={styles.footerLink}>Sign up here!</Text>
+                        </TouchableOpacity>
+                    </Link>
                 </View>
             </View>
         </View>
