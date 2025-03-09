@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import MemoListItem from "../../components/MemoListItem";
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/Icom";
-import LogoutButton from "../../components/logoutButton";
+import LogoutButton from "../../components/LogoutButton";
 
 
 const handlepress = (): void => {
