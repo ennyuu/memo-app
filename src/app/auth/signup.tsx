@@ -51,7 +51,7 @@ const Signup = (): JSX.Element => {
                 <Button label="Submit" onPress={() => { handlePress(email, password) }} />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already registed?</Text>
-                    <Link href="auth/login" asChild>
+                    <Link href="auth/login" asChild replace>
                         <TouchableOpacity>
                             <Text style={styles.footerLink}>Login.</Text>
                         </TouchableOpacity>
