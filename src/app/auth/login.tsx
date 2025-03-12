@@ -19,7 +19,6 @@ const handlePress = (email: string, password: string): void => {
             console.error(code, message);
             Alert.alert(message);
         });
-    router.replace('/memo/list');
 }
 
 const Login = (): JSX.Element => {
