@@ -4,7 +4,6 @@ import  { router } from "expo-router";
 import { auth } from "../config";
 
 const handlePress = (): void => {
-    console.log('handlePressが実行されない'); //デバッグ用
     signOut(auth)
         .then(() => {
             router.replace('/auth/login');
