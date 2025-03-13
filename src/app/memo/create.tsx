@@ -1,10 +1,21 @@
 import { View, TextInput, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { router } from "expo-router";
+import { collection, addDoc } from "firebase/firestore";
 
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/Icom";
+import { db } from "../../config";
 
 const handlePress = (): void => {
+    addDoc(collection(db, 'memos'), {
+        bodyText: 'Test',
+    })
+        .then((docRef) => {
+            console.log('Document successfully written!', docRef.id);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     router.back();
 }
 
