@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { router, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
@@ -43,11 +43,7 @@ const List = (): JSX.Element => {
     }, []);
     return (
         <View style={styles.container}>
-            <View>
-                {memos.map((memo) => {
-                    return <MemoListItem memo={memo} />
-                })}
-            </View>
+            <FlatList data={memos} renderItem={({ item }) => { return <MemoListItem memo={item} /> }} />
             <CircleButton onPress={handlepress}>
                 <Icon name="plus" size={40} color="#ffffff" />
             </CircleButton>
