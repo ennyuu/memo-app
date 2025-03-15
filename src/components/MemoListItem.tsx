@@ -16,7 +16,10 @@ const MemoListItem = (props: Props): JSX.Element | null => {
     const date = createdAt.toDate();
     const dateString = date.toLocaleString('ja-JP');
     return (
-        <Link href="/memo/detail" asChild>
+        <Link
+            href={{ pathname: '/memo/detail', params: { id: memo.id } }}
+            asChild
+        >
             <TouchableOpacity style={styles.memoListItem}>
 
                 <View>
