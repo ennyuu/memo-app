@@ -7,6 +7,8 @@ import MemoListItem from "../../components/MemoListItem";
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/Icom";
 import LogoutButton from "../../components/LogoutButton";
+import UserName from "../../components/UserName";
+
 import { db, auth } from "../../config";
 import { type Memo } from "../../../types/memo";
 
@@ -20,6 +22,7 @@ const List = (): JSX.Element => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => { return <LogoutButton /> },
+            headerLeft: () => { return <UserName /> },
         });
     }, []);
     useEffect(() => {
