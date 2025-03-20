@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../config";
 
 const UserName = (): JSX.Element => {
-    const [userName, setUserEmail] = useState<string | null>(null);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
 
     useEffect(() => {
         if (auth.currentUser !== null) {
@@ -12,7 +12,7 @@ const UserName = (): JSX.Element => {
     }, []);
 
     return (
-        <Text style={styles.buttonLabel}>{userName}</Text>
+        <Text style={styles.buttonLabel}>{userEmail}</Text>
     );
 }
 
