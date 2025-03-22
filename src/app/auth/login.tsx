@@ -7,6 +7,9 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config";
 
+import { signInAnonymously } from "firebase/auth";
+
+
 const handlePress = (email: string, password: string): void => {
     // ログイン
     signInWithEmailAndPassword(auth, email, password)
@@ -19,6 +22,21 @@ const handlePress = (email: string, password: string): void => {
             console.error(code, message);
             Alert.alert(message);
         });
+}
+
+const anonymousLogin = (): void => {
+    // 匿名ログイン
+    try {
+        signInAnonymously(auth)
+        console.log('anonymous login success!!');
+    } catch (e) {
+        // something wrong
+        if (e instanceof Error) {
+            console.log(e.message);
+        } else {
+            console.log('An unknown error occurred');
+        }
+    }
 }
 
 const Login = (): JSX.Element => {
@@ -49,6 +67,10 @@ const Login = (): JSX.Element => {
                 <Button
                     label="Submit"
                     onPress={() => handlePress(email, password)}
+                />
+                <Button
+                    label="匿名でログインする"
+                    onPress={() => anonymousLogin()}
                 />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registed?</Text>
