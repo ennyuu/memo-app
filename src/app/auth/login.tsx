@@ -29,6 +29,11 @@ const anonymousLogin = (): void => {
     try {
         signInAnonymously(auth)
         console.log('anonymous login success!!');
+        Alert.alert('30日以上経過した匿名アカウントは自動的に削除されます。', '継続して利用する場合はサインアップをしてください。', [
+            {
+                text: 'OK',
+            },
+        ])
     } catch (e) {
         // something wrong
         if (e instanceof Error) {
