@@ -1,11 +1,8 @@
 import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from "react-native";
-
 import Button from "../../components/Button";
-
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../../config";
 
 const handlePress = (email: string, password: string): void => {
@@ -14,7 +11,22 @@ const handlePress = (email: string, password: string): void => {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log(userCredential);
-            router.replace('/memo/list');
+            const user = userCredential.user;
+
+            // メール確認を送信
+            sendEmailVerification(user)
+                .then(() => {
+                    Alert.alert(
+                        "確認メールを送信しました",
+                        "メールを確認して、アカウントを有効化してください。",
+                        [{ text: "OK" }]
+                    );
+                    router.replace('/auth/login');
+                })
+                .catch((error) => {
+                    console.error("メール送信エラー:", error.message);
+                    Alert.alert("メール送信に失敗しました。");
+                });
         })
         .catch((error) => {
             const { code, message } = error;
@@ -50,7 +62,7 @@ const Signup = (): JSX.Element => {
                 />
                 <Button label="Submit" onPress={() => { handlePress(email, password) }} />
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}>Already registed?</Text>
+                    <Text style={styles.footerText}>Already registered?</Text>
                     <Link href="auth/login" asChild replace>
                         <TouchableOpacity>
                             <Text style={styles.footerLink}>Login.</Text>
@@ -101,7 +113,6 @@ const styles = StyleSheet.create({
         color: '#467FD3',
         marginLeft: 8,
     },
-
-})
+});
 
 export default Signup;

@@ -3,26 +3,82 @@ import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from "reac
 import Button from "../../components/Button";
 
 import { Link, router } from "expo-router";
-import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../../config";
 
 import { signInAnonymously } from "firebase/auth";
 
+const checkEmailVerification = (): void => {
+    const user = auth.currentUser;
+
+    if (user) {
+        if (!user.emailVerified) {
+            Alert.alert(
+                "メール確認が必要です",
+                "メールを確認してアカウントを有効化してください。",
+                [
+                    {
+                        text: "確認メールを再送信",
+                        onPress: () => {
+                            sendEmailVerification(user)
+                                .then(() => {
+                                    Alert.alert("確認メールを再送信しました。");
+                                })
+                                .catch((error) => {
+                                    console.error("メール送信エラー:", error.message);
+                                    Alert.alert("メール送信に失敗しました。");
+                                });
+                        },
+                    },
+                    { text: "OK" },
+                ]
+            );
+        } else {
+            console.log("メール確認済みです。");
+        }
+    }
+};
 
 const handlePress = (email: string, password: string): void => {
     // ログイン
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log(userCredential.user.uid);
-            router.replace('/memo/list');
+            const user = userCredential.user;
+
+            // メールアドレスが確認済みかをチェック
+            if (user.emailVerified) {
+                console.log(user.uid);
+                router.replace('/memo/list');
+            } else {
+                Alert.alert(
+                    "メールアドレスが未確認です",
+                    "メールを確認してアカウントを有効化してください。",
+                    [
+                        {
+                            text: "確認メールを再送信",
+                            onPress: () => {
+                                sendEmailVerification(user)
+                                    .then(() => {
+                                        Alert.alert("確認メールを再送信しました。");
+                                    })
+                                    .catch((error) => {
+                                        console.error("メール送信エラー:", error.message);
+                                        Alert.alert("メール送信に失敗しました。");
+                                    });
+                            },
+                        },
+                        { text: "OK" },
+                    ]
+                );
+            }
         })
         .catch((error) => {
             const { code, message } = error;
             console.error(code, message);
             Alert.alert(message);
         });
-}
+};
 
 const anonymousLogin = (): void => {
     // 匿名ログイン
@@ -47,6 +103,11 @@ const anonymousLogin = (): void => {
 const Login = (): JSX.Element => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        checkEmailVerification();
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
